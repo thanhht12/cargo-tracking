@@ -1,0 +1,40 @@
+.gradle
+build/
+/out
+!gradle/wrapper/gradle-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea/
+.run/**
+!.run/01 - cargotracking-booking-app-commandside \[bootRun\].run.xml
+!.run/02 - cargotracking-booking-app-queryside-projection-rdbms \[bootRun\].run.xml
+!.run/03 - cargotracking-booking-app-queryside-view \[bootRun\].run.xml
+!.run/cargotracking-booking-app-rdbms-management \[bootRun\].run.xml
+!.run/11 - cargotracking-booking-app-commandside with observability \[bootRun\].run.xml
+!.run/12 - cargotracking-booking-app-queryside-projection-rdbms with observability \[bootRun\].run.xml
+!.run/13 - cargotracking-booking-app-queryside-view with observability \[bootRun\].run.xml
+*.iws
+*.iml
+*.ipr
+*.log
+*.zip
+*.sha256
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+**/bin
+
+!tool/klokwrk-tool-gradle-source-repack/src/test/resources/testFiles/*.zip
+!tool/klokwrk-tool-gradle-source-repack/src/test/resources/testFiles/*.sha256
+/support/docker/grafana/grafana-agent/agent.env

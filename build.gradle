@@ -1,0 +1,108 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Copyright 2020-2023 CROZ d.o.o, the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+plugins {
+  id "klokwrk-gradle-plugin-convention-root-project"
+  id "org.kordamp.gradle.codenarc" version "$gradleKordampPluginVersion"
+  id "org.kordamp.gradle.groovy-project" version "$gradleKordampPluginVersion"
+  id "org.kordamp.gradle.jacoco" version "$gradleKordampPluginVersion"
+}
+
+config {
+  // Enable some features related to publishing
+  setRelease(true)
+
+  info {
+    setName(rootProject.name)
+    setDescription("Showcase and blueprint for implementing elaborated distributed systems on JVM.")
+    setInceptionYear("2020")
+
+    links {
+      setWebsite("https://github.com/croz-ltd/klokwrk-project")
+      setScm("https://github.com/croz-ltd/klokwrk-project")
+      setIssueTracker("https://github.com/croz-ltd/klokwrk-project/issues")
+    }
+
+    organization {
+      setName("CROZ d.o.o.")
+      setUrl("https://croz.net/")
+    }
+
+    people {
+      person {
+        setId("dmurat")
+        setName("Damir Murat")
+        setRoles(["developer", "architect"])
+      }
+    }
+  }
+
+  licensing {
+    setExcludes(["**/.gitkeep", "**/*.gdsl", "**/*.zip", "**/*.sha256"] as Set<String>)
+
+    licenses {
+      license {
+        setId("Apache-2.0")
+        setPrimary(true)
+        setName("Apache License, Version 2.0")
+        setUrl("https://opensource.org/licenses/Apache-2.0")
+      }
+    }
+  }
+
+  buildInfo {
+    // To enable reproducible builds, and avoid re-executing gradle tasks on each run because of changes in JAR manifests.
+    setSkipBuildTime(true)
+    setSkipBuildDate(true)
+  }
+
+  coverage {
+    jacoco {
+      setToolVersion("$jacocoVersion")
+    }
+  }
+
+  docs {
+    groovydoc {
+      setReplaceJavadoc(true)
+      setIncludes(["**/*.groovy"] as Set)
+
+      options {
+        setUse(true)
+
+        // Links to Groovy APIs are provided by plugin
+        link(
+            "https://docs.oracle.com/en/java/javase/11/docs/api/java.base",
+            "java.io.", "java.lang.", "java.math.", "java.net.", "java.nio.", "java.security.", "java.text.", "java.time.", "java.util.", "javax.crypto.", "javax.net.", "javax.security."
+        )
+        link("https://docs.spring.io/spring-boot/docs/current/api/", "org.springframework.boot.")
+        link("https://docs.spring.io/spring-framework/docs/current/javadoc-api", "org.aopalliance.", "org.springframework.")
+        link("https://apidocs.axoniq.io/4.3/", "org.axonframework.", "io.axoniq.axonserver.grpc.")
+      }
+      aggregate {
+        getExcludedProjects().add(project(":klokwrk-tool-gradle-source-repack"))
+      }
+    }
+  }
+
+  quality {
+    codenarc {
+      setIgnoreFailures(true)
+      setConfigFile(file("support/codenarc/codenarc.groovy"))
+    }
+  }
+}
